@@ -48,3 +48,12 @@ def ProxHstar(x0: np.ndarray,lmbda: float) -> np.ndarray:
     prox = x0 / np.maximum(gradient_norm/lmbda,1)
     return(prox)
 
+# NOT checked yet: to be added the choice for computing the preconditioned gradient
+def gradient_datafidelity(eigA: np.ndarray, x0: np.ndarray, bdelta: np.ndarray)-> np.ndarray:
+    bhat = np.fft.fft2(bdelta)
+    xhat = np.fft.fft2(x0)
+    eig_xhat = eigA * xhat
+    grad = np.real(np.fft.ifft2(np.conj(eigA) *(eig_xhat - bhat)))
+
+
+    
